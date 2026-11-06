@@ -67,6 +67,24 @@ const aspectRatios = [
   { width: 1200, height: 1800 }, // 2:3 (portrait)
 ] as const
 
+// Real pixel dimensions for photos whose actual file ratio differs from the
+// placeholder ratios above. Keyed by collection slug, then 1-based index.
+// Without this the masonry layout crops non-standard images via object-fit: cover.
+const photoDimensionOverrides: Record<string, Record<number, { width: number; height: number }>> = {
+  'tokyo': {
+    2: { width: 350, height: 350 },
+    3: { width: 614, height: 614 },
+    4: { width: 1080, height: 1094 },
+    5: { width: 350, height: 350 },
+  },
+}
+
+// Featured photo indexes per collection (1-based). Marked with a star badge
+// in the gallery and shown in the "Featured Photos" section on the homepage.
+const featuredPhotoIndexes: Record<string, Set<number>> = {
+  'tokyo': new Set([2, 3, 4, 5]),
+}
+
 // Function to get images for a collection
 function getCollectionImages(collectionSlug: string): Photo[] {
   // Get the proper folder name from our mapping instead of generating it
@@ -80,7 +98,8 @@ function getCollectionImages(collectionSlug: string): Photo[] {
     const index = i + 1
     const format = collectionSlug === 'bali' && index >= 10 && index <= 15 ? 'jpg' : collectionFormats[collectionSlug]
     const imagePath = `/${folderName}/${collectionSlug}-${index}.${format}`
-    const dimensions = aspectRatios[index % aspectRatios.length]
+    const dimensions =
+      photoDimensionOverrides[collectionSlug]?.[index] ?? aspectRatios[index % aspectRatios.length]
 
     return {
       id: `${collectionSlug}-${index}`,
@@ -89,6 +108,7 @@ function getCollectionImages(collectionSlug: string): Photo[] {
       height: dimensions.height,
       alt: `${collectionSlug} image ${index}`,
       metadata: defaultMetadata,
+      featured: featuredPhotoIndexes[collectionSlug]?.has(index) ?? false,
     }
   })
 }
@@ -181,3 +201,7 @@ export const getAllCollections = (): Collection[] => collections
 export const getFeaturedCollections = (): Collection[] => collections.filter(collection => collection.featured)
 export const getCollection = (slug: string): Collection | undefined => collections.find(collection => collection.slug === slug)
 export const getAllTags = (): string[] => Array.from(new Set(collections.flatMap(collection => collection.tags)))
+export const getFeaturedPhotos = (): { photo: Photo; collection: Collection }[] =>
+  collections.flatMap(collection =>
+    collection.photos.filter(photo => photo.featured).map(photo => ({ photo, collection }))
+  )

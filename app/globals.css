@@ -242,3 +242,47 @@ body {
     color-scheme: dark;
   }
 }
+
+/* ---------------------------------------------------------------
+   Featured photos marquee (home page)
+   Cards drift slowly from left to right, looping seamlessly.
+   --------------------------------------------------------------- */
+
+@keyframes fp-marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fp-rainbow-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fp-track {
+  animation: fp-marquee-right 48s linear infinite;
+  will-change: transform;
+}
+
+.fp-rainbow {
+  animation: fp-rainbow-spin 9s linear infinite;
+}
+
+/* Pause the loop while a photo is being inspected */
+.fp-viewport:hover .fp-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fp-track,
+  .fp-rainbow {
+    animation: none;
+  }
+}

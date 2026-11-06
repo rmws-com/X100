@@ -5,7 +5,7 @@ import { useState, useCallback, useEffect, useRef } from "react"
 import Image from "next/image"
 import PhotoAlbum from "react-photo-album"
 import "react-photo-album/masonry.css"
-import { X, ChevronLeft, ChevronRight, Camera } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, Camera, Star } from "lucide-react"
 import type { Photo } from "@/lib/types"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
@@ -59,6 +59,12 @@ const NextJsImageComponent = ({
         style={{ objectFit: "cover" }}
         quality={85}
       />
+      {photo.photo?.featured && (
+        <div className="absolute top-2 left-2 z-20 flex items-center gap-1 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm border border-white/20">
+          <Star size={12} className="text-amber-400 fill-amber-400" />
+          <span className="text-xs text-white">精选</span>
+        </div>
+      )}
     </div>
   );
 };

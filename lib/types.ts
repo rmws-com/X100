@@ -14,6 +14,8 @@ export interface Photo {
   alt: string
   /** Technical metadata about the photo */
   metadata: PhotoMetadata
+  /** Whether the photo is featured (精选) */
+  featured?: boolean
 }
 
 /**
