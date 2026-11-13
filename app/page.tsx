@@ -3,6 +3,7 @@
 import { ArrowRight } from "lucide-react"
 import FeaturedCollections from "@/components/featured-collections"
 import FeaturedPhotos from "@/components/featured-photos"
+import PokemonGallery from "@/components/pokemon-gallery"
 import AnimatedButton from "@/components/animated-button"
 import { motion } from "framer-motion"
 import HeroSlider from "@/components/hero-slider"
@@ -66,6 +67,25 @@ export default function Home() {
 
       {/* Layout Grid Section */}
       <LayoutGridDemo />
+
+      {/* Pokémon Gallery */}
+      <section className="mt-24 mb-10 px-4 md:px-8 z-10">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-primary text-3xl md:text-4xl mb-4">Pokémon Gallery</h2>
+            <p className="text-primary max-w-2xl mx-auto">
+              Ten free-licensed photographs from the world of Pokémon
+            </p>
+          </motion.div>
+          <PokemonGallery />
+        </div>
+      </section>
 
       {/* Featured Photos */}
       <section className="mt-32 mb-10 px-4 md:px-8 z-10">

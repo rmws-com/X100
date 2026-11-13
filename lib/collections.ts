@@ -7,7 +7,8 @@ const collectionFormats: Record<string, string> = {
   'tokyo': 'jpg',
   'new-zealand': 'jpg',
   'iceland': 'jpg',
-  'urban-portraits': 'jpg'
+  'urban-portraits': 'jpg',
+  'santorini': 'jpg'
 } as const
 
 // Collection folder name mapping (for case sensitivity)
@@ -17,7 +18,8 @@ const collectionFolders: Record<string, string> = {
   'tokyo': 'Tokyo',
   'new-zealand': 'new zealand',
   'iceland': 'Iceland',
-  'urban-portraits': 'Urban Portraits'
+  'urban-portraits': 'Urban Portraits',
+  'santorini': 'Santorini'
 } as const
 
 // Collection image counts and formats
@@ -44,6 +46,10 @@ const collectionImages: Record<string, { count: number; formats: string[] }> = {
   },
   'urban-portraits': { 
     count: 16,
+    formats: ['jpg']
+  },
+  'santorini': {
+    count: 12,
     formats: ['jpg']
   }
 } as const
@@ -76,6 +82,20 @@ const photoDimensionOverrides: Record<string, Record<number, { width: number; he
     3: { width: 614, height: 614 },
     4: { width: 1080, height: 1094 },
     5: { width: 350, height: 350 },
+  },
+  'santorini': {
+    1: { width: 1920, height: 1280 },
+    2: { width: 1920, height: 1280 },
+    3: { width: 1920, height: 1280 },
+    4: { width: 1920, height: 1280 },
+    5: { width: 1920, height: 1440 },
+    6: { width: 1920, height: 1280 },
+    7: { width: 1920, height: 1282 },
+    8: { width: 1920, height: 1080 },
+    9: { width: 1920, height: 1282 },
+    10: { width: 1731, height: 1155 },
+    11: { width: 1920, height: 1440 },
+    12: { width: 1920, height: 2880 },
   },
 }
 
@@ -193,6 +213,18 @@ const collections: Collection[] = [
     tags: ["Urban", "People", "Street"],
     featured: false,
     photos: getCollectionImages("urban-portraits"),
+  },
+  {
+    id: "7",
+    slug: "santorini",
+    title: "Santorini: White & Blue",
+    description: "Whitewashed villages perched above the Aegean caldera",
+    fullDescription:
+      "Santorini is defined by a single, unbroken palette: chalk-white walls, cobalt domes, and the deep blue of the Aegean below. This collection follows the cliffside lanes of Oia and Fira, where cave houses are carved into volcanic rock and every terrace frames the caldera.",
+    coverImage: getCoverImagePath("Santorini"),
+    tags: ["Coastal", "Architecture", "Culture"],
+    featured: false,
+    photos: getCollectionImages("santorini"),
   },
 ]
 

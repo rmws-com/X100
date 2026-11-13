@@ -286,3 +286,73 @@ body {
     animation: none;
   }
 }
+
+/* ---------------------------------------------------------------
+   Pokémon gallery marquee (home page)
+   Reuses the featured-photos keyframes so both rails share motion.
+   --------------------------------------------------------------- */
+
+.pk-track {
+  /* 10 cards ≈ 3240px per group; 120s keeps the drift at ~27px/s,
+     matching the featured-photos rail so both feel equally slow. */
+  animation: fp-marquee-right 120s linear infinite;
+  will-change: transform;
+}
+
+.pk-rainbow {
+  animation: fp-rainbow-spin 9s linear infinite;
+}
+
+/* Pause the loop while a card is being inspected */
+.pk-viewport:hover .pk-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pk-track,
+  .pk-rainbow {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Pokémon gallery: lifted card overlay
+   The card itself is transformed inline (rotation follows the
+   pointer), so only the surrounding chrome is animated here.
+   --------------------------------------------------------------- */
+
+@keyframes pk-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.pk-fade-in {
+  animation: pk-fade-in 0.3s ease both;
+}
+
+.pk-card-lift {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pk-fade-in {
+    animation: none;
+  }
+}
+
+/* While the lifted card is open, blur the page behind it. A backdrop-filter
+   scrim cannot do this on its own: the marquee track is promoted to a
+   compositor layer and would be painted above the scrim. */
+body.pk-lifted > *:not([data-pk-overlay]) {
+  filter: blur(10px) saturate(0.9);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body > * {
+    transition: filter 0.35s ease;
+  }
+}
