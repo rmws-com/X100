@@ -10,6 +10,7 @@ import { useSearchParams } from "next/navigation"
 import { motion } from "framer-motion"
 import { useShutterSound } from "./sound-effects"
 import LiftCard, { type LiftCardData } from "./lift-card"
+import PhotoStamp from "./photo-stamp"
 import type { Collection } from "@/lib/types"
 
 // Same rainbow palette as the home-page rails so every card shares a look
@@ -178,6 +179,7 @@ export default function CollectionGrid() {
                           />
                         </div>
                       </div>
+                      <PhotoStamp src={group[0].coverImage} className="bottom-8 right-8" />
                     </div>
                   </div>
 
@@ -254,7 +256,7 @@ export default function CollectionGrid() {
                           </div>
 
                           {/* Content positioned at the bottom */}
-                          <div className="absolute bottom-0 left-0 right-0 p-6">
+                          <div className="absolute bottom-0 left-0 right-0 px-6 pt-6 pb-10">
                             <h3 className="text-2xl text-white mb-2 group-hover:text-white/90 transition-colors">
                               {collection.title}
                             </h3>
@@ -278,6 +280,7 @@ export default function CollectionGrid() {
                               />
                             </div>
                           </div>
+                          <PhotoStamp src={collection.coverImage} className="bottom-3 right-6" />
                         </div>
                       </div>
 
